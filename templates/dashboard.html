@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Dashboard</title>
+    <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url("{{ url_for('static',filename='skill.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            position:relative;
+        }
+
+        .container {
+            background-image: url("{{ url_for('static',filename='images/blue.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 1050px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .header-title {
+            font-size: 34px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 25px;
+        }
+
+        /* బాక్సుల స్టైల్ */
+        .card {
+            border: 1px solid #eef2f6;
+            border-radius: 15px;
+            padding: 30px;
+            background: #fffcfc;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .summary-card { flex: 1; }
+        .content-area { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+
+        /* ప్రొఫైల్ సెక్షన్ */
+        .profile { 
+            text-align: center; 
+            margin-bottom: 10px; 
+            
+        }
+        .profile img {
+             width: 80px; 
+            border-radius: 50%; 
+            margin-top:30px;
+            margin-bottom: 10px; 
+        }
+       
+        #resultName{
+            font-size:25px;
+            margin-top:13px;
+            margin-bottom:10px;
+        }
+        #resultRegNo{
+            margin-top:10px;
+            margin-bottom:22px;
+        
+        }
+        
+        /* గ్రాఫ్ హెడర్ (Avg Marks ఇక్కడ ఉంటుంది) */
+        .graph-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .avg-legend {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot { width: 12px;
+               height: 12px; 
+               background: #6366f1; 
+               border-radius: 50%; 
+               margin-top:3px;
+               margin-right:6px; 
+              
+            }
+
+        /* గ్రాఫ్ బాడీ విత్ Y-Axis */
+        .graph-wrapper {
+            display: flex;
+            height: 220px;
+            position: relative;
+        }
+
+        /* Y-Axis నంబర్లు */
+        .y-axis {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            height:200px;
+            padding-right:10px;
+            font-size: 12px;
+            /* padding-top:3px;
+            padding-bottom:1px; */
+            color: black;
+            font-weight:bold;
+            border-right: 1px solid #f1f5f9;
+        }
+
+        .chart-area {
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height:200px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .grid-line { border-top: 1px dashed #f1f5f9; width: 100%; height: 0; }
+
+        /* బార్ స్టైల్ */
+        .bar {
+            width:35px;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s;
+        
+        }
+        .bar:hover { transform: scaleY(1.05); }
+
+        .bar-label {
+            position: absolute;
+            bottom:-59px;
+            left: 50%;
+            width:90px;
+            transform: translateX(-50%);
+            font-size: 13px;
+            white-space:normal;
+            word-wrap:break-word;
+            line-height:1.2;
+            text-align:center;
+            color:black;
+            font-weight: bolder;
+            padding-bottom:20px;
+        
+    
+           
+        }
+
+        /* మార్కుల విలువ బార్ పైన */
+        .bar-value {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+         /* Analysis-box*/
+        .analysis-card {
+        
+             padding:0;
+             overflow:hidden;
+             border-radius:18px;
+             height:180px;
+             background-color:#efcc92;
+            
+        }
+        .analysis-card,p{
+            padding-left:15px;
+            
+        }
+     
+        #style{
+        
+         padding:7px 0;
+         margin:10px;
+         margin-left:0.5px;
+         font-size:16px;
+         font-weight:600;
+         border-radius:10px;
+         text-align: center;
+         display:flex;
+         justify-content: center;
+         text-align:center;
+         border:2px solid #b88430;
+        /* border-color: #e8b057; */
+          background:#ddae62;
+        }
+
+
+        #suggestionBox h5 {
+    
+         padding :10px;
+         margin :3px 0;
+         border-bottom: 1.5px solid #e8b057;
+         border-left: 1.5px solid #e8b057;
+         border-top: 1.5px solid #e8b057;
+         border-right:1.5px solid #e8b057;
+         border-radius:7px;
+         text-align: center;
+         
+
+        }
+        .top-bar {
+         position: absolute;
+         top: 75px;
+         right: 330px;
+        }
+
+    .logout-btn {
+    background: white;
+    color: #2c3e50;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.5s ease;
+}
+
+.logout-btn:hover {
+    background: #f1f1f1;
+    transform: scale(1.09);
+}
+.bar:nth-child(1){ background:#3b82f6; }   
+.bar:nth-child(2){ background:#22c55e; }   
+.bar:nth-child(3){ background:#f59e0b; }   
+.bar:nth-child(4){ background:#ef4444; } 
+.bar:nth-child(5){ background:#8b5cf6; } 
+.bar:nth-child(6){ background:#14b8a6; } 
+
+
+    </style>
+</head>
+<body onload="loadResultPage()">
+  <div class="top-bar">
+    <a href="{{ url_for('logout') }}" class="logout-btn">
+        <span class="icon" >
+        <i class="fa-solid fa-user"></i>
+        </span>
+         Logout
+    </a>
+</div>
+
+<div class="container">
+    <div class="header-title"
+    id="welcomeResult" style="color:white;">Welcome, {{name}} </div>
+
+    <div class="main-layout">
+        <div class="card summary-card">
+            <div class="profile">
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="image pic is missing" width="180" 
+       height="100">
+                <h3 id="resultName">{{name}}</h3>
+                <p id="resultReg">{{reg}}</p>
+            </div>
+            <div style="font-size: 16px; line-height: 2;">
+                  <p>🚀
+                     <b>Average Marks : 
+                     <span style="color:green; font-weight:bold;">
+                        {{avg}}</b>
+                     </span>   
+                </p>
+
+                <p>🏆 
+                    <b>Grade : 
+                    <span style="color:orangered; font-weight:bold;">
+                        {{grade}}</b>
+                    </span>
+                </p>
+                <p>🌍
+                     <b>Skill Level : 
+                    <span style="color:darkblue; font-weight:bold;">
+                        {{level}}</b> 
+                    </span>
+                </p>
+                <p>✅ 
+                   <b>Result :</b>
+                   {% if result == "Pass" %}
+                  <span style="color: green; font-weight: bold;">
+                      {{ result }}
+                  </span>
+                      {% else %}
+                   <span style="color: red; font-weight: bold;">
+                      {{ result }}
+                 </span>
+                       {% endif %}
+
+                </p>
+                </p>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="card">
+                <div class="graph-header">
+                    <b style="font-size: 16px;">Performance Graph</b>
+                    <div class="avg-legend">
+                        <span class="dot"></span>
+                        <span style="color:black;font-weight:bold;font-size:15px;">Avg Marks : </span><span style="color: green; font-weight: bold; font-size:15px;">{{avg}}</span>
+                    </div>
+                </div>
+
+                <div class="graph-wrapper">
+                    <div class="y-axis">
+                        <span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span>
+                    </div>
+                    
+                    <div class="chart-area" id="chart">
+                        {% for i in range(subjects|length) %}
+
+                     <div class="bar" style="height: {{ marks[i] }}%;">
+                         <span class="bar-value">{{ marks[i] }}</span>
+                         <span class="bar-label">{{ subjects[i] }}</span>
+                     </div>
+
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+           <div class="card analysis-card">
+                <b  id="style" style="font-size: 16px;">Analysis & Suggestions</b>
+                
+               <p>
+                <span class="icon" style="margin-top:20px;">📘</span>
+               <b>Weak Subject :</b>
+                <span style="color:red;font-weight:bold;">
+                 {{weak_subject}}
+                </span>
+               </p>
+
+               <p>
+                 <span class="icon">🎯</span>
+                <b>Suggested Action :</b>
+                <span style="color:purple;font-style:italic; font-weight:bold">
+                    {{suggestion}}
+                </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./static/script.js"></script>
+</body>
+</html>

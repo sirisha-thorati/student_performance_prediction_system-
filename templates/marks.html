@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Result Predictor</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-image: url("{{ url_for('static',filename='skill.jpeg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        padding:30px 20px;
+        
+    } 
+
+    /* Main Card */
+    .card{
+        width:100%;
+        max-width:600px;
+        background:white;
+        padding:20px;
+        border-radius:20px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.1);
+        height:90vh;
+        overflow:hidden;
+        
+    }
+
+    /* Header */
+    .header{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-bottom:8px;
+    }
+
+    .header img{
+        width:50px;
+        height:50px;
+        border-radius:50%;
+    }
+
+    .header h3{
+        font-size:18px;
+    }
+
+    .header p{
+        font-size:13px;
+        padding:6px;
+        color:#666;
+    }
+
+    /* Welcome Box */
+    .welcome-box{
+        /* background:rgb(221, 203, 221); */
+        background:#8eb3db;
+        padding:10px;
+        margin-top:14px;
+        border-radius:15px;
+    }
+
+    .welcome-box h2{
+        font-size:20px;
+        margin-bottom:5px;
+    }
+
+    .welcome-box p{
+        margin-top:8px;
+        font-size:14px;
+        color:#575050;
+        margin-bottom:9px;
+    }
+
+    /* Marks Container */
+    .marks-box{
+        background:#fff;
+        padding:13px;
+        border-radius:12px;
+        border:1px solid rgb(229, 221, 221);
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        max-height:90vh;
+    }
+
+    .marks-box h3{
+        margin-bottom:5px;
+    }
+
+    /* Subject Row */
+    .subject{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:5px;
+        margin-top:15px;
+        /* margin-bottom:8.5px; */
+        border:1px solid #d0ccd6;
+        border-radius:10px;
+        background:#fafafa;
+    }
+
+    .subject input{
+        width:120px;
+        padding:6px;
+    
+        border-radius:8px;
+        border:0.5px solid #c2baba;
+        outline:none;
+    }
+
+    /* Button */
+    .btn{
+        width:100%;
+        margin-top:15px;
+    
+        padding:12px;
+        border:none;
+        border-radius:25px;
+        background: linear-gradient(90deg,#6a5cff,#4d8dff);
+        color:#fff;
+        font-size:16px;
+        cursor:pointer;
+    }
+
+    .btn:hover{
+        opacity:0.9;
+    }
+
+    /* Responsive for big screens */
+    @media (min-width:768px){
+        .card{
+            max-width:500px;
+        }
+    }
+</style>
+</head>
+
+<body onload="loadMarksPage()">
+
+<div class="card">
+
+    <!-- Header Left Icon + Details -->
+    <div class="header">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
+       alt="User Icon" 
+       width="120" 
+       height="120">
+        <div>
+            <h3>{{name}}</h3>
+            <p>Reg No:{{reg}}</p>
+        </div>
+    </div>
+
+    <!-- Welcome Container -->
+    <div class="welcome-box">
+        <h2>Welcome, {{name}} !</h2>
+        <p>Please enter your marks below to predict the academic performance.</p>
+
+        <!-- Enter Marks Container -->
+        <div class="marks-box">
+            <h3>Enter Marks</h3>
+ 
+            <form action="/predict" method="POST">
+
+                {% for subject in subjects %}
+
+                <div class="subject">
+                    <span>{{subject}}</span>
+                    <input type="number" name="{{subject}}" placeholder="Enter Marks" required>
+                </div>
+
+                {% endfor %}
+
+                <button type="submit" class="btn">Predict Result</button>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<script src="./static/script.js"></script>
+</body >
+</html>

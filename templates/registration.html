@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Performance Prediction System</title>
+
+<!-- Google Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!--CSS -->
+<style>
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    font-family: 'Segoe UI', sans-serif;
+}    
+body{
+    margin-top:50px;
+    margin-bottom:60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 0;
+    background-image: url("{{ url_for('static',filename='skill.jpeg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    
+}
+
+.main-container{
+    width:90%;
+    max-width:500px;
+    padding:35px;
+    background:white;
+    border-radius:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+    
+}
+.header{
+    text-align:left;
+    margin-bottom:20px;
+}
+
+.header h2{
+    margin:0;
+}
+
+.header p{
+    font-size:14px;
+    color:gray;
+}
+
+.registration-box{
+    margin-top:10px;
+    padding:0;
+    background:#f9f9ff;
+    border-radius:12px;
+}
+
+.registration-box h3{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:10px;
+}
+
+.input-group label{
+    font-size:14px;
+    display:block;
+    margin-bottom:5px;
+}
+
+.input-field{
+    display:flex;
+    align-items:center;
+    background:white;
+    border-radius:8px;
+    padding:8px;
+    border:1px solid #d2c6c6;
+}
+
+.input-field i{
+    margin-right:8px;
+    color:#4b6cff;
+}
+
+.input-field input,
+.input-field select{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:14px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background: linear-gradient(to right,#5f2eea,#4b6cff);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.footer{
+    text-align:center;
+    margin-top:13px;
+    font-size:13px;
+    color:rgb(124, 118, 118);
+}
+.input-group {
+            margin: 12px 0;
+            text-align: left;
+            font-weight:300;
+        }
+
+        label {
+            font-size: 16px;
+            color:black;
+            font-weight:600;
+        
+        }
+       
+        .input-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 8px;
+            padding:8px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .input-box img {
+            width: 20px;
+            margin-right: 10px;
+            opacity: 0.6;
+        }
+
+        .input-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        
+        }
+        .input-box i{
+             margin-right:8px;
+       
+             color:#4b6cff;
+}
+#eye-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+    <div class="header">
+        <h2>📊 Student Performance Prediction System</h2>
+        <p>Predicting whether a student will pass/fail based on their academic performance</p>
+    </div>
+
+    <div class="registration-box">
+        <h3>Student Registration</h3>
+
+      <form action="/register" method="POST">
+
+        <div class="input-group">
+            <label>Registration Number</label>
+            <div class="input-field">
+                <i class="fa-solid fa-id-card"></i>
+                <input type="text" id="registerNumber" name="registerNumber" placeholder="Enter your Register Number" required>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Student Name</label>
+            <div class="input-field">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="studentName" name="studentName" placeholder="Enter your name" required>
+            </div>
+        </div>
+
+         <div class="input-group">
+            <label>Username</label>
+            <div class="input-box">
+                <i class="fas fa-user icon"></i>
+                <!-- <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"> -->
+                <input type="text" name="username" placeholder="Enter your username" required>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-box">
+                <i class="fas fa-lock icon"></i>
+                <!-- <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png"> -->
+                <input type="password"
+                 name="password" 
+                 id="password"
+                 placeholder="Enter your password"
+                 required>
+                <i class="fa-solid fa-eye-slash" id="eye" style="color:black;" onclick="togglePassword()"></i>
+                  
+            </div>
+        </div>
+
+
+        <div class="input-group">
+            <label>Department</label>
+            <div class="input-field">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <select id="department" name="department" required>
+                    <option value="">Please select your Course</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="BCA">BCA</option>
+                    <option value="Bsc">Bsc</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-group">
+            <label>Year</label>
+            <div class="input-field">
+                <i class="fa-solid fa-calendar"></i>
+                <select id="year" name="year" required>
+                    <option value="">Select your Academic year</option>
+                    <option value="1">First Year</option>
+                    <option value="2">Second Year</option>
+                    <option value="3">Third Year</option>
+                    <option value="4">Final Year</option>
+                </select>
+            
+            </div>
+        </div>
+         <div class="input-group">
+            <label>Semister</label>
+            <div class="input-field">
+                <i class="fa-solid fa-book"></i>
+                <input type="number" id="semister" name="semister" placeholder="please Enter your Semister" min="1" max="8"required>
+            </div>
+        </div>
+
+        <button type="submit">Register</button>
+
+      </form>
+             
+
+    </div>
+
+    <div class="footer">
+        © 2026 - Student Performance Predictor
+    </div>
+
+</div>
+<script src="{{url_for('static',filename='script.js')}}"></script>
+</body>
+</html>

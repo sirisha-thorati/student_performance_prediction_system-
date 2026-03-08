@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Prediction System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            height: 100vh;
+            background-image: url("{{ url_for('static',filename='skill.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 350px;
+            height:360px;
+            background: #f2f2f2;
+            padding:27px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h1 {
+            /* position: absolute;
+            top: 100px; */
+            color: rgb(253, 248, 248);
+            font-size:43px;
+            margin-bottom:35px;
+            text-align:center;
+            white-space:nowrap;
+            font-weight:bold;
+            font-style:italic;
+            
+        }
+
+        .input-group {
+            margin: 12px 0;
+            text-align: left;
+            font-weight:300;
+        }
+
+        label {
+            font-size: 16px;
+            color: #514e4e;
+        
+        }
+       
+        .input-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 8px;
+            padding:8px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .input-box img {
+            width: 20px;
+            margin-right: 10px;
+            opacity: 0.6;
+        }
+
+        .input-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding:10px;
+            background: linear-gradient(to right, #1f4ea3, #2563eb);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+            transition: 0.3s;
+        }
+
+        
+        .container {
+           animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+           from { opacity: 0; transform: translateY(-100px); transition-duration: 150px; }
+           to { opacity: 1; transform: translateY(0); }
+        }
+
+        a {
+            margin-top: 15px;
+            color: #2563eb;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: 0.5px solid #ccc;
+        }
+
+        .signup {
+            font-size: 14px;
+        }
+
+        .signup a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .error-box {
+        background-color: #ffe6e6;
+        color: #d13434;
+        font-weight:580;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 14px;
+        border: 2px solid #cc0000;
+}
+
+.input-box {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+    </style>
+</head>
+
+<body>
+
+<h1>Academic Performance Predictor</h1>
+
+<div class="container">
+
+    <form action="/login" method="POST">
+
+        <div class="input-group">
+            <label>Username:</label>
+            <div class="input-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png">
+                <input type="text" 
+                name="username" 
+                placeholder="Enter your username" 
+                required>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Password:</label>
+            <div class="input-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png">
+                <input type="password" 
+                name="password"
+                id="password"
+                placeholder="Enter your password" 
+                required>
+                <i class="fa-solid fa-eye-slash" id="eye" onclick="togglePassword()"></i>
+            </div>
+        </div>
+
+         <p style="text-align:right;">
+         <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
+         </p>
+
+        <button class="btn">Login</button>
+
+        {% if error %}
+        <div class="error-box">
+        {{ error }}
+        </div>
+        {% endif %}
+
+    </form>
+
+    <hr>
+
+    <div class="signup">
+        Don't have an account?
+        <a href="/register">Sign Up</a>
+    </div>
+
+</div>
+<script src="{{url_for('static',filename='script.js')}}"></script>
+</body>
+</html>

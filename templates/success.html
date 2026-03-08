@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Successful</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background-image: url("{{ url_for('static',filename='skill.jpeg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    /* overflow:hidden; */
+}
+
+/*  background effect */
+body::before{
+    content:"🎉 🎊 🎉 🎊 🎉 🎊 🎉 🎊";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    font-size:40px;
+    opacity:0.1;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    align-items:center;
+}
+
+/* Main Card */
+.success-card{
+    position:relative;
+    width:400px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    z-index:1;
+}
+
+/* Green Tick Circle */
+.tick-circle{
+    width:90px;
+    height:90px;
+    background:#28a745;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto 20px auto;
+    animation:pop 0.4s ease-in-out;
+}
+
+.tick-circle i{
+    color:white;
+    font-size:40px;
+}
+
+/* Animation */
+@keyframes pop{
+    0%{transform:scale(0);}
+    100%{transform:scale(1);}
+}
+
+.success-card h2{
+    margin:10px 0;
+}
+
+.success-card p{
+    color:gray;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background: linear-gradient(to right,#5f2eea,#4b6cff);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.footer{
+    position:absolute;
+    bottom:15px;
+    text-align:center;
+    width:100%;
+    font-size:13px;
+    color:gray;
+}
+</style>
+
+<!-- Font Awesome for Tick -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="success-card">
+
+    <div class="tick-circle">
+        <i class="fa-solid fa-check"></i>
+    </div>
+    
+
+    <h2>Registration Successful!</h2>
+    <p>You have successfully registered.<br>
+       You can now enter your marks.</p>
+
+   <button
+    onclick="window.location.href='/marks'">Enter Marks</button>
+   </button>
+  
+ 
+
+</div>
+
+<div class="footer">
+    © 2026 - Student Performance Predictor
+</div>
+<script src="./static/script.js"></script>
+</body>
+</html>
