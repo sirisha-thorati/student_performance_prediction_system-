@@ -3,4 +3,6 @@ numpy
 scikit-learn
 pandas
 pymysql
+gunicorn
+
 
