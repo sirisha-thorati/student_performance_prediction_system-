@@ -2,4 +2,5 @@ Flask
 numpy
 scikit-learn
 pandas
+pymysql
 
